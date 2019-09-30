@@ -7,3 +7,5 @@
 This is a [Golang](https://golang.org) library which contains finance related functions.
 
 Currently, the only thing it supports is getting the current exchange rates from the [ECB](https://www.ecb.europa.eu).
+
+It also supports checking VAT numbers via the [VIES service](http://ec.europa.eu/taxation_customs/vies/vatRequest.html).
