@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -17,29 +18,41 @@ var RatesURL = DefaultRatesURL
 var DefaultTimeout = 5 * time.Second
 
 // ExchangeRates returs the list exchange rates
-func ExchangeRates() (ExchangeRate, error) {
+func ExchangeRates() (map[string]float64, error) {
 
 	var rates ExchangeRate
+
+	ratesMap := make(map[string]float64, 0)
 
 	client := &http.Client{}
 	client.Timeout = DefaultTimeout
 
 	resp, err := client.Get(RatesURL)
 	if err != nil {
-		return rates, err
+		return ratesMap, err
 	}
 	defer resp.Body.Close()
 
 	rawData, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return rates, err
+		return ratesMap, err
 	}
 
 	err = xml.Unmarshal(rawData, &rates)
 	if err != nil {
-		return rates, err
+		return ratesMap, err
 	}
 
-	return rates, nil
+	ratesMap["EUR"] = 1
+
+	for _, cube := range rates.Cubes {
+		for _, timedCube := range cube.TimedCubes {
+			for _, rate := range timedCube.Rates {
+				ratesMap[strings.ToUpper(rate.Currency)] = rate.Rate
+			}
+		}
+	}
+
+	return ratesMap, nil
 
 }
