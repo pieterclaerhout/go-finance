@@ -20,7 +20,7 @@ var DefaultTimeout = 5 * time.Second
 // ExchangeRates returs the list exchange rates
 func ExchangeRates() (map[string]float64, error) {
 
-	var rates ExchangeRate
+	var rates exchangeRate
 
 	ratesMap := make(map[string]float64, 0)
 
