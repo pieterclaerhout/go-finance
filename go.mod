@@ -1,4 +1,4 @@
-module github.com/pieterclaerhout/go-ydfinance
+module github.com/pieterclaerhout/go-finance
 
 go 1.13
 

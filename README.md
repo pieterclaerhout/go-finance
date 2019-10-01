@@ -1,8 +1,8 @@
-## go-ydfinance
+## go-finance
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/pieterclaerhout/go-ydfinance)](https://goreportcard.com/report/github.com/pieterclaerhout/go-ydfinance)
-[![Documentation](https://godoc.org/github.com/pieterclaerhout/go-ydfinance?status.svg)](http://godoc.org/github.com/pieterclaerhout/go-ydfinance)
-[![GitHub issues](https://img.shields.io/github/issues/pieterclaerhout/go-ydfinance.svg)](https://github.com/pieterclaerhout/go-ydfinance/issues)
+[![Go Report Card](https://goreportcard.com/badge/github.com/pieterclaerhout/go-finance)](https://goreportcard.com/report/github.com/pieterclaerhout/go-finance)
+[![Documentation](https://godoc.org/github.com/pieterclaerhout/go-finance?status.svg)](http://godoc.org/github.com/pieterclaerhout/go-finance)
+[![GitHub issues](https://img.shields.io/github/issues/pieterclaerhout/go-finance.svg)](https://github.com/pieterclaerhout/go-finance/issues)
 
 This is a [Golang](https://golang.org) library which contains finance related functions.
 

@@ -1,4 +1,4 @@
-package ydfinance_test
+package finance_test
 
 import (
 	"net/http"
@@ -8,12 +8,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/pieterclaerhout/go-ydfinance"
+	"github.com/pieterclaerhout/go-finance"
 )
 
 func Test_ExchangeRates_Valid(t *testing.T) {
 
-	rates, err := ydfinance.ExchangeRates()
+	rates, err := finance.ExchangeRates()
 
 	assert.NoErrorf(t, err, "err should be nil, is: %v", err)
 	assert.NotNilf(t, rates, "rates should not be nil")
@@ -23,10 +23,10 @@ func Test_ExchangeRates_Valid(t *testing.T) {
 
 func Test_ExchangeRates_InvalidURL(t *testing.T) {
 
-	ydfinance.RatesURL = "ht&@-tp://:aa"
+	finance.RatesURL = "ht&@-tp://:aa"
 	defer resetRatesURL()
 
-	rates, err := ydfinance.ExchangeRates()
+	rates, err := finance.ExchangeRates()
 
 	assert.Error(t, err)
 	assert.Empty(t, rates)
@@ -35,7 +35,7 @@ func Test_ExchangeRates_InvalidURL(t *testing.T) {
 
 func Test_ExchangeRates_Timeout(t *testing.T) {
 
-	ydfinance.DefaultTimeout = 250 * time.Millisecond
+	finance.DefaultTimeout = 250 * time.Millisecond
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -46,10 +46,10 @@ func Test_ExchangeRates_Timeout(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.RatesURL = s.URL
+	finance.RatesURL = s.URL
 	defer resetRatesURL()
 
-	rates, err := ydfinance.ExchangeRates()
+	rates, err := finance.ExchangeRates()
 
 	assert.Error(t, err)
 	assert.Empty(t, rates)
@@ -65,10 +65,10 @@ func Test_ExchangeRates_ReadBodyError(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.RatesURL = s.URL
+	finance.RatesURL = s.URL
 	defer resetRatesURL()
 
-	rates, err := ydfinance.ExchangeRates()
+	rates, err := finance.ExchangeRates()
 
 	assert.Error(t, err)
 	assert.Empty(t, rates)
@@ -85,10 +85,10 @@ func Test_ExchangeRates_InvalidXML(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.RatesURL = s.URL
+	finance.RatesURL = s.URL
 	defer resetRatesURL()
 
-	rates, err := ydfinance.ExchangeRates()
+	rates, err := finance.ExchangeRates()
 
 	assert.Error(t, err)
 	assert.Empty(t, rates)
@@ -96,5 +96,5 @@ func Test_ExchangeRates_InvalidXML(t *testing.T) {
 }
 
 func resetRatesURL() {
-	ydfinance.RatesURL = ydfinance.DefaultRatesURL
+	finance.RatesURL = finance.DefaultRatesURL
 }

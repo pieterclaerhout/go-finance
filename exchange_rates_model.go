@@ -1,4 +1,4 @@
-package ydfinance
+package finance
 
 // exchangeRate defines the exchange rate
 type exchangeRate struct {

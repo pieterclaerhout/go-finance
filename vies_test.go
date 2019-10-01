@@ -1,4 +1,4 @@
-package ydfinance_test
+package finance_test
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/pieterclaerhout/go-ydfinance"
+	"github.com/pieterclaerhout/go-finance"
 )
 
 func Test_Check(t *testing.T) {
@@ -25,7 +25,7 @@ func Test_Check(t *testing.T) {
 	}
 
 	var tests = []test{
-		{"empty", "", "", "", "", "", false, ydfinance.ErrVATNumberTooShort},
+		{"empty", "", "", "", "", "", false, finance.ErrVATNumberTooShort},
 		{"valid-spaces", "BE 0836 157 420", "BE", "0836157420", "SPRL APPLE RETAIL BELGIUM", "Avenue du Port 86C/204\n1000 Bruxelles", true, nil},
 		{"valid-nospaces", "BE0836157420", "BE", "0836157420", "SPRL APPLE RETAIL BELGIUM", "Avenue du Port 86C/204\n1000 Bruxelles", true, nil},
 		{"valid-dots", "BE 0836.157.420", "BE", "0836157420", "SPRL APPLE RETAIL BELGIUM", "Avenue du Port 86C/204\n1000 Bruxelles", true, nil},
@@ -36,7 +36,7 @@ func Test_Check(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 
-			result, err := ydfinance.CheckVAT(tc.vatNumber)
+			result, err := finance.CheckVAT(tc.vatNumber)
 
 			if tc.expectedError != nil {
 
@@ -63,12 +63,12 @@ func Test_Check(t *testing.T) {
 
 func Test_Check_InvalidURL(t *testing.T) {
 
-	ydfinance.VATServiceURL = "ht&@-tp://:aa"
+	finance.VATServiceURL = "ht&@-tp://:aa"
 	defer func() {
-		ydfinance.VATServiceURL = ydfinance.DefaultVATServiceURL
+		finance.VATServiceURL = finance.DefaultVATServiceURL
 	}()
 
-	result, err := ydfinance.CheckVAT("BE0836157420")
+	result, err := finance.CheckVAT("BE0836157420")
 
 	assert.Nil(t, result, "result")
 	assert.Error(t, err, "error")
@@ -86,14 +86,14 @@ func Test_Check_Timeout(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.VATTimeout = 250 * time.Millisecond
-	ydfinance.VATServiceURL = s.URL
+	finance.VATTimeout = 250 * time.Millisecond
+	finance.VATServiceURL = s.URL
 	defer func() {
-		ydfinance.VATTimeout = ydfinance.DefaultVATTimeout
-		ydfinance.VATServiceURL = ydfinance.DefaultVATServiceURL
+		finance.VATTimeout = finance.DefaultVATTimeout
+		finance.VATServiceURL = finance.DefaultVATServiceURL
 	}()
 
-	result, err := ydfinance.CheckVAT("BE0836157420")
+	result, err := finance.CheckVAT("BE0836157420")
 
 	assert.Nil(t, result, "result")
 	assert.Error(t, err, "error")
@@ -109,12 +109,12 @@ func Test_Check_ReadBodyError(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.VATServiceURL = s.URL
+	finance.VATServiceURL = s.URL
 	defer func() {
-		ydfinance.VATServiceURL = ydfinance.DefaultVATServiceURL
+		finance.VATServiceURL = finance.DefaultVATServiceURL
 	}()
 
-	result, err := ydfinance.CheckVAT("BE0836157420")
+	result, err := finance.CheckVAT("BE0836157420")
 
 	assert.Nil(t, result, "result")
 	assert.Error(t, err, "error")
@@ -130,16 +130,16 @@ func Test_Check_InvalidInput(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.VATServiceURL = s.URL
+	finance.VATServiceURL = s.URL
 	defer func() {
-		ydfinance.VATServiceURL = ydfinance.DefaultVATServiceURL
+		finance.VATServiceURL = finance.DefaultVATServiceURL
 	}()
 
-	result, err := ydfinance.CheckVAT("BE0836157420")
+	result, err := finance.CheckVAT("BE0836157420")
 
 	assert.Nil(t, result, "result")
 	assert.Error(t, err, "error")
-	assert.Equal(t, ydfinance.ErrVATnumberNotValid, err)
+	assert.Equal(t, finance.ErrVATnumberNotValid, err)
 
 }
 
@@ -152,12 +152,12 @@ func Test_Check_InvalidXML(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.VATServiceURL = s.URL
+	finance.VATServiceURL = s.URL
 	defer func() {
-		ydfinance.VATServiceURL = ydfinance.DefaultVATServiceURL
+		finance.VATServiceURL = finance.DefaultVATServiceURL
 	}()
 
-	result, err := ydfinance.CheckVAT("BE0836157420")
+	result, err := finance.CheckVAT("BE0836157420")
 
 	assert.Nil(t, result, "result")
 	assert.Error(t, err, "error")
@@ -173,15 +173,15 @@ func Test_Check_SoapFault(t *testing.T) {
 	)
 	defer s.Close()
 
-	ydfinance.VATServiceURL = s.URL
+	finance.VATServiceURL = s.URL
 	defer func() {
-		ydfinance.VATServiceURL = ydfinance.DefaultVATServiceURL
+		finance.VATServiceURL = finance.DefaultVATServiceURL
 	}()
 
-	result, err := ydfinance.CheckVAT("BE0836157420")
+	result, err := finance.CheckVAT("BE0836157420")
 
 	assert.Nil(t, result, "result")
 	assert.Error(t, err, "error")
-	assert.Equal(t, ydfinance.ErrVATserviceError+"error", err.Error(), "error-message")
+	assert.Equal(t, finance.ErrVATserviceError+"error", err.Error(), "error-message")
 
 }

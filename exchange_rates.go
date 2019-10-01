@@ -1,4 +1,4 @@
-package ydfinance
+package finance
 
 import (
 	"encoding/xml"
