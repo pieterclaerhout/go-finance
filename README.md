@@ -1,4 +1,4 @@
-## go-finance
+# go-finance
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/pieterclaerhout/go-finance)](https://goreportcard.com/report/github.com/pieterclaerhout/go-finance)
 [![Documentation](https://godoc.org/github.com/pieterclaerhout/go-finance?status.svg)](http://godoc.org/github.com/pieterclaerhout/go-finance)
