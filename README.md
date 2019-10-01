@@ -8,6 +8,60 @@
 
 This is a [Golang](https://golang.org) library which contains finance related functions.
 
-Currently, the only thing it supports is getting the current exchange rates from the [ECB](https://www.ecb.europa.eu).
+## Exchange Rates
 
-It also supports checking VAT numbers via the [VIES service](http://ec.europa.eu/taxation_customs/vies/vatRequest.html).
+The following example explains how to use this package to retrieve the exchange rates from [ECB](https://www.ecb.europa.eu):
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/pieterclaerhout/go-finance"
+)
+
+func main() {
+
+	rates, err := finance.ExchangeRates()
+	if err != nil {
+		fmt.Println("ERROR:", err.Error())
+		os.Exit(1)
+	}
+
+	for currency, rate := range rates {
+		fmt.Println(currency, "-> €1 =", rate)
+	}
+
+}
+```
+
+## Checking VAT Numbers
+
+
+You can also VAT numbers via the [VIES service](http://ec.europa.eu/taxation_customs/vies/vatRequest.html). The following sample code shows how to do this:
+
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/pieterclaerhout/go-finance"
+)
+
+func main() {
+
+	info, err := finance.CheckVAT("BE0836157420")
+	if err != nil {
+		fmt.Println("ERROR:", err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Println(info)
+
+}
+```

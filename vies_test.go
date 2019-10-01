@@ -48,11 +48,13 @@ func Test_Check(t *testing.T) {
 				assert.NotNil(t, result, "result")
 				assert.NoError(t, err, "error")
 
-				assert.Equal(t, tc.expectedCountryCode, result.CountryCode, "country-code")
-				assert.Equal(t, tc.expectedVATnumber, result.VATNumber, "vat-number")
-				assert.Equal(t, tc.expectedIsValid, result.IsValid, "is-valid")
-				assert.Equal(t, tc.expectedName, result.Name, "name")
-				assert.Equal(t, tc.expectedAddress, result.Address, "address")
+				if result != nil {
+					assert.Equal(t, tc.expectedCountryCode, result.CountryCode, "country-code")
+					assert.Equal(t, tc.expectedVATnumber, result.VATNumber, "vat-number")
+					assert.Equal(t, tc.expectedIsValid, result.IsValid, "is-valid")
+					assert.Equal(t, tc.expectedName, result.Name, "name")
+					assert.Equal(t, tc.expectedAddress, result.Address, "address")
+				}
 
 			}
 
