@@ -5,6 +5,7 @@
 [![license](https://img.shields.io/badge/license-Apache%20v2-orange.svg)](https://github.com/pieterclaerhout/go-finance/raw/master/LICENSE)
 [![GitHub version](https://badge.fury.io/gh/pieterclaerhout%2Fgo-finance.svg)](https://badge.fury.io/gh/pieterclaerhout%2Fgo-finance)
 [![GitHub issues](https://img.shields.io/github/issues/pieterclaerhout/go-finance.svg)](https://github.com/pieterclaerhout/go-finance/issues)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpieterclaerhout%2Fgo-finance.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpieterclaerhout%2Fgo-finance?ref=badge_shield)
 
 This is a [Golang](https://golang.org) library which contains finance related functions.
 
@@ -92,3 +93,6 @@ func main() {
 
 }
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpieterclaerhout%2Fgo-finance.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpieterclaerhout%2Fgo-finance?ref=badge_large)
