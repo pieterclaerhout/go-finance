@@ -3,7 +3,6 @@ package finance
 import (
 	"bytes"
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -26,18 +25,6 @@ const DefaultVATServiceURL = "http://ec.europa.eu/taxation_customs/vies/services
 
 // VATServiceURL is the SOAP URL to be used when checking a VAT number
 var VATServiceURL = DefaultVATServiceURL
-
-const envelope = `
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v1="http://schemas.conversesolutions.com/xsd/dmticta/v1">
-<soapenv:Header/>
-<soapenv:Body>
-  <checkVat xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types">
-    <countryCode>{{countryCode}}</countryCode>
-    <vatNumber>{{vatNumber}}</vatNumber>
-  </checkVat>
-</soapenv:Body>
-</soapenv:Envelope>
-`
 
 // DefaultVATTimeout is the default timeout to use when checking the VAT service
 const DefaultVATTimeout = 5 * time.Second
@@ -64,7 +51,7 @@ func CheckVAT(vatNumber string) (*VATInfo, error) {
 
 	vatNumber = sanitizeVatNumber(vatNumber)
 
-	e, err := buildEnvelope(vatNumber)
+	e, err := buildViewEnvelope(vatNumber)
 	if err != nil {
 		return nil, err
 	}
@@ -112,8 +99,6 @@ func CheckVAT(vatNumber string) (*VATInfo, error) {
 		return nil, err
 	}
 
-	fmt.Sprintln(rd)
-
 	if rd.Soap.SoapFault.Message != "" {
 		return nil, errors.New(ErrVATserviceError + rd.Soap.SoapFault.Message)
 	}
@@ -141,17 +126,23 @@ func sanitizeVatNumber(vatNumber string) string {
 	return vatNumber
 }
 
-// buildEnvelope parses envelope template
-func buildEnvelope(vatNumber string) (string, error) {
+// buildViewEnvelope parses envelope template
+func buildViewEnvelope(vatNumber string) (string, error) {
 
 	if len(vatNumber) < 3 {
 		return "", ErrVATNumberTooShort
 	}
 
-	result := strings.TrimSpace(envelope)
-	result = strings.ReplaceAll(result, "{{countryCode}}", strings.ToUpper(vatNumber[0:2]))
-	result = strings.ReplaceAll(result, "{{vatNumber}}", strings.ToUpper(vatNumber[2:]))
+	envelope := `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v1="http://schemas.conversesolutions.com/xsd/dmticta/v1">
+<soapenv:Header/>
+<soapenv:Body>
+  <checkVat xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types">
+    <countryCode>` + strings.ToUpper(vatNumber[0:2]) + `</countryCode>
+    <vatNumber>` + strings.ToUpper(vatNumber[2:]) + `</vatNumber>
+  </checkVat>
+</soapenv:Body>
+</soapenv:Envelope>`
 
-	return result, nil
+	return envelope, nil
 
 }

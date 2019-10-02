@@ -65,3 +65,30 @@ func main() {
 
 }
 ```
+
+## IBAN & BIC
+
+There is also a function which converts a regular Belgian Bank Account Number to it's IBAN / BIC equivalent:
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/pieterclaerhout/go-finance"
+)
+
+func main() {
+
+	info, err := finance.CheckIBAN("738120256174")
+	if err != nil {
+		fmt.Println("ERROR:", err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Println(info)
+
+}
+```

@@ -63,7 +63,7 @@ func Test_Check(t *testing.T) {
 
 }
 
-func Test_Check_InvalidURL(t *testing.T) {
+func Test_CheckVAT_InvalidURL(t *testing.T) {
 
 	finance.VATServiceURL = "ht&@-tp://:aa"
 	defer func() {
@@ -77,7 +77,7 @@ func Test_Check_InvalidURL(t *testing.T) {
 
 }
 
-func Test_Check_Timeout(t *testing.T) {
+func Test_CheckVAT_Timeout(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -102,7 +102,7 @@ func Test_Check_Timeout(t *testing.T) {
 
 }
 
-func Test_Check_ReadBodyError(t *testing.T) {
+func Test_CheckVAT_ReadBodyError(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -123,7 +123,7 @@ func Test_Check_ReadBodyError(t *testing.T) {
 
 }
 
-func Test_Check_InvalidInput(t *testing.T) {
+func Test_CheckVAT_InvalidInput(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -145,7 +145,7 @@ func Test_Check_InvalidInput(t *testing.T) {
 
 }
 
-func Test_Check_InvalidXML(t *testing.T) {
+func Test_CheckVAT_InvalidXML(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -166,7 +166,7 @@ func Test_Check_InvalidXML(t *testing.T) {
 
 }
 
-func Test_Check_SoapFault(t *testing.T) {
+func Test_CheckVAT_SoapFault(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
