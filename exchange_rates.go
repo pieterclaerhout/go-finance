@@ -2,6 +2,7 @@ package finance
 
 import (
 	"encoding/xml"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -54,5 +55,29 @@ func ExchangeRates() (map[string]float64, error) {
 	}
 
 	return ratesMap, nil
+
+}
+
+// ConvertRate converts a value from once exchange rate to another
+func ConvertRate(value float64, from string, to string) (float64, error) {
+
+	rates, err := ExchangeRates()
+	if err != nil {
+		return 0, err
+	}
+
+	fromRate, ok := rates[from]
+	if !ok {
+		return 0, errors.New("Invalid from currency: " + from)
+	}
+
+	toRate, ok := rates[to]
+	if !ok {
+		return 0, errors.New("Invalid to currency: " + to)
+	}
+
+	result := value / fromRate * toRate
+
+	return result, nil
 
 }

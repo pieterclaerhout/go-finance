@@ -95,6 +95,58 @@ func Test_ExchangeRates_InvalidXML(t *testing.T) {
 
 }
 
+func Test_ConvertRate(t *testing.T) {
+
+	type test struct {
+		name         string
+		value        float64
+		from         string
+		to           string
+		expectsError bool
+	}
+
+	var tests = []test{
+		{"invalid", 1, "", "", true},
+		{"invalid-from", 1, "EUR", "", true},
+		{"invalid-to", 1, "", "EUR", true},
+		{"valid-eur-eur", 2, "EUR", "EUR", false},
+		{"valid-eur-usd", 2, "EUR", "USD", false},
+		{"valid-aud-usd", 2, "AUD", "USD", false},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+
+			actual, err := finance.ConvertRate(tc.value, tc.from, tc.to)
+
+			if tc.expectsError {
+				assert.Zero(t, actual, "actual")
+				assert.Error(t, err, "error")
+			} else {
+				assert.NotZero(t, actual, "actual")
+				assert.NoError(t, err, "error")
+				if tc.from != tc.to {
+					assert.NotEqual(t, tc.value, actual, "should-not-be-equal")
+				}
+			}
+
+		})
+	}
+
+}
+
+func Test_ConvertRate_InvalidURL(t *testing.T) {
+
+	finance.RatesURL = "ht&@-tp://:aa"
+	defer resetRatesURL()
+
+	actual, err := finance.ConvertRate(1, "EUR", "USD")
+
+	assert.Zero(t, actual, "actual")
+	assert.Error(t, err, "error")
+
+}
+
 func resetRatesURL() {
 	finance.RatesURL = finance.DefaultRatesURL
 }
