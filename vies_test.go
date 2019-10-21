@@ -82,7 +82,7 @@ func TestCheckVATInvalidURL(t *testing.T) {
 func TestCheckVATTimeout(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			time.Sleep(500 * time.Millisecond)
 			w.Header().Set("Content-Type", "text/xml")
 			w.Write([]byte("hello"))

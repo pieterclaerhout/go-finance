@@ -78,7 +78,7 @@ func TestExchangeRatesReadBodyError(t *testing.T) {
 func TestExchangeRatesInvalidXML(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Header().Set("Content-Type", "text/plain")
 			w.Write([]byte("hello"))
 		}),

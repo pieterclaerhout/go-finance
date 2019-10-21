@@ -76,7 +76,7 @@ func TestCheckIBANInvalidURL(t *testing.T) {
 func TestCheckIBANTimeout(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			time.Sleep(500 * time.Millisecond)
 			w.Header().Set("Content-Type", "text/xml")
 			w.Write([]byte("hello"))
@@ -101,7 +101,7 @@ func TestCheckIBANTimeout(t *testing.T) {
 func TestCheckIBANReadBodyError(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Write([]byte(`<string xmlns="http://tempuri.org/">KBC Bank</string>`))
 		}),
 	)
@@ -122,7 +122,7 @@ func TestCheckIBANReadBodyError(t *testing.T) {
 func TestCheckIBANInvalidBody(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Header().Set("Content-Length", "1")
 		}),
 	)
