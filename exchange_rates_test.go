@@ -11,7 +11,7 @@ import (
 	"github.com/pieterclaerhout/go-finance"
 )
 
-func Test_ExchangeRates_Valid(t *testing.T) {
+func TestExchangeRatesValid(t *testing.T) {
 
 	rates, err := finance.ExchangeRates()
 
@@ -21,7 +21,7 @@ func Test_ExchangeRates_Valid(t *testing.T) {
 
 }
 
-func Test_ExchangeRates_InvalidURL(t *testing.T) {
+func TestExchangeRatesInvalidURL(t *testing.T) {
 
 	finance.RatesURL = "ht&@-tp://:aa"
 	defer resetRatesURL()
@@ -33,7 +33,7 @@ func Test_ExchangeRates_InvalidURL(t *testing.T) {
 
 }
 
-func Test_ExchangeRates_Timeout(t *testing.T) {
+func TestExchangeRatesTimeout(t *testing.T) {
 
 	finance.DefaultTimeout = 250 * time.Millisecond
 
@@ -56,7 +56,7 @@ func Test_ExchangeRates_Timeout(t *testing.T) {
 
 }
 
-func Test_ExchangeRates_ReadBodyError(t *testing.T) {
+func TestExchangeRatesReadBodyError(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +75,7 @@ func Test_ExchangeRates_ReadBodyError(t *testing.T) {
 
 }
 
-func Test_ExchangeRates_InvalidXML(t *testing.T) {
+func TestExchangeRatesInvalidXML(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -95,7 +95,7 @@ func Test_ExchangeRates_InvalidXML(t *testing.T) {
 
 }
 
-func Test_ConvertRate(t *testing.T) {
+func TestConvertRate(t *testing.T) {
 
 	type test struct {
 		name         string
@@ -135,7 +135,7 @@ func Test_ConvertRate(t *testing.T) {
 
 }
 
-func Test_ConvertRate_InvalidURL(t *testing.T) {
+func TestConvertRateInvalidURL(t *testing.T) {
 
 	finance.RatesURL = "ht&@-tp://:aa"
 	defer resetRatesURL()

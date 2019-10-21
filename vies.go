@@ -76,6 +76,8 @@ func CheckVAT(vatNumber string) (*VATInfo, error) {
 		return nil, ErrVATnumberNotValid
 	}
 
+	// return nil, errors.New(string(xmlRes))
+
 	var rd struct {
 		XMLName xml.Name `xml:"Envelope"`
 		Soap    struct {

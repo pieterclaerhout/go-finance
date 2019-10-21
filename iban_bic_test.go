@@ -12,7 +12,7 @@ import (
 	"github.com/pieterclaerhout/go-finance"
 )
 
-func Test_CheckIBAN(t *testing.T) {
+func TestCheckIBAN(t *testing.T) {
 
 	type test struct {
 		number           string
@@ -59,7 +59,7 @@ func Test_CheckIBAN(t *testing.T) {
 
 }
 
-func Test_CheckIBAN_InvalidURL(t *testing.T) {
+func TestCheckIBANInvalidURL(t *testing.T) {
 
 	finance.IBANBICServiceURL = "ht&@-tp://:aa"
 	defer func() {
@@ -73,7 +73,7 @@ func Test_CheckIBAN_InvalidURL(t *testing.T) {
 
 }
 
-func Test_CheckIBAN_Timeout(t *testing.T) {
+func TestCheckIBANTimeout(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -98,7 +98,7 @@ func Test_CheckIBAN_Timeout(t *testing.T) {
 
 }
 
-func Test_CheckIBAN_ReadBodyError(t *testing.T) {
+func TestCheckIBANReadBodyError(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -119,7 +119,7 @@ func Test_CheckIBAN_ReadBodyError(t *testing.T) {
 
 }
 
-func Test_CheckIBAN_InvalidBody(t *testing.T) {
+func TestCheckIBANInvalidBody(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -140,7 +140,7 @@ func Test_CheckIBAN_InvalidBody(t *testing.T) {
 
 }
 
-func Test_CheckIBAN_PartialFail(t *testing.T) {
+func TestCheckIBANPartialFail(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

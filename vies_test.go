@@ -11,7 +11,7 @@ import (
 	"github.com/pieterclaerhout/go-finance"
 )
 
-func Test_Check(t *testing.T) {
+func TestCheck(t *testing.T) {
 
 	type test struct {
 		name                string
@@ -35,6 +35,8 @@ func Test_Check(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
+
+			time.Sleep(1 * time.Second)
 
 			result, err := finance.CheckVAT(tc.vatNumber)
 
@@ -63,7 +65,7 @@ func Test_Check(t *testing.T) {
 
 }
 
-func Test_CheckVAT_InvalidURL(t *testing.T) {
+func TestCheckVATInvalidURL(t *testing.T) {
 
 	finance.VATServiceURL = "ht&@-tp://:aa"
 	defer func() {
@@ -77,7 +79,7 @@ func Test_CheckVAT_InvalidURL(t *testing.T) {
 
 }
 
-func Test_CheckVAT_Timeout(t *testing.T) {
+func TestCheckVATTimeout(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -102,7 +104,7 @@ func Test_CheckVAT_Timeout(t *testing.T) {
 
 }
 
-func Test_CheckVAT_ReadBodyError(t *testing.T) {
+func TestCheckVATReadBodyError(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -123,11 +125,11 @@ func Test_CheckVAT_ReadBodyError(t *testing.T) {
 
 }
 
-func Test_CheckVAT_InvalidInput(t *testing.T) {
+func TestCheckVATInvalidInput(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("INVALID_INPUT"))
+			w.Write([]byte("INVALIDINPUT"))
 		}),
 	)
 	defer s.Close()
@@ -145,7 +147,7 @@ func Test_CheckVAT_InvalidInput(t *testing.T) {
 
 }
 
-func Test_CheckVAT_InvalidXML(t *testing.T) {
+func TestCheckVATInvalidXML(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -166,7 +168,7 @@ func Test_CheckVAT_InvalidXML(t *testing.T) {
 
 }
 
-func Test_CheckVAT_SoapFault(t *testing.T) {
+func TestCheckVATSoapFault(t *testing.T) {
 
 	s := httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
