@@ -107,7 +107,7 @@ func TestCheckVATTimeout(t *testing.T) {
 func TestCheckVATReadBodyError(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Header().Set("Content-Length", "1")
 		}),
 	)
@@ -128,7 +128,7 @@ func TestCheckVATReadBodyError(t *testing.T) {
 func TestCheckVATInvalidInput(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Write([]byte("INVALIDINPUT"))
 		}),
 	)
@@ -150,7 +150,7 @@ func TestCheckVATInvalidInput(t *testing.T) {
 func TestCheckVATInvalidXML(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Write([]byte("<vies>"))
 		}),
 	)
@@ -171,7 +171,7 @@ func TestCheckVATInvalidXML(t *testing.T) {
 func TestCheckVATSoapFault(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Write([]byte(`<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><soap:Fault><faultcode>soap:Server</faultcode><faultstring>error</faultstring></soap:Fault></soap:Body></soap:Envelope>`))
 		}),
 	)
