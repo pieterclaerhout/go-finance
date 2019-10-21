@@ -38,7 +38,7 @@ func TestExchangeRatesTimeout(t *testing.T) {
 	finance.DefaultTimeout = 250 * time.Millisecond
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			time.Sleep(500 * time.Millisecond)
 			w.Header().Set("Content-Type", "text/plain")
 			w.Write([]byte("hello"))
@@ -59,7 +59,7 @@ func TestExchangeRatesTimeout(t *testing.T) {
 func TestExchangeRatesReadBodyError(t *testing.T) {
 
 	s := httptest.NewServer(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.Header().Set("Content-Length", "1")
 		}),
 	)
