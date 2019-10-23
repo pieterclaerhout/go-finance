@@ -11,6 +11,9 @@ import (
 	"github.com/pieterclaerhout/go-finance"
 )
 
+const nameApple = "SPRL APPLE RETAIL BELGIUM"
+const addrApple = "Avenue du Port 86C/204\n1000 Bruxelles"
+
 func TestCheck(t *testing.T) {
 
 	type test struct {
@@ -26,9 +29,9 @@ func TestCheck(t *testing.T) {
 
 	var tests = []test{
 		{"empty", "", "", "", "", "", false, finance.ErrVATNumberTooShort},
-		{"valid-spaces", "BE 0836 157 420", "BE", "0836157420", "SPRL APPLE RETAIL BELGIUM", "Avenue du Port 86C/204\n1000 Bruxelles", true, nil},
-		{"valid-nospaces", "BE0836157420", "BE", "0836157420", "SPRL APPLE RETAIL BELGIUM", "Avenue du Port 86C/204\n1000 Bruxelles", true, nil},
-		{"valid-dots", "BE 0836.157.420", "BE", "0836157420", "SPRL APPLE RETAIL BELGIUM", "Avenue du Port 86C/204\n1000 Bruxelles", true, nil},
+		{"valid-spaces", "BE 0836 157 420", "BE", "0836157420", nameApple, addrApple, true, nil},
+		{"valid-nospaces", "BE0836157420", "BE", "0836157420", nameApple, addrApple, true, nil},
+		{"valid-dots", "BE 0836.157.420", "BE", "0836157420", nameApple, addrApple, true, nil},
 		{"valid-ie", "IE6388047V", "IE", "6388047V", "GOOGLE IRELAND LIMITED", "3RD FLOOR, GORDON HOUSE, BARROW STREET, DUBLIN 4", true, nil},
 		{"invalid", "IE6388047A", "IE", "6388047A", "", "", false, nil},
 	}
@@ -42,13 +45,13 @@ func TestCheck(t *testing.T) {
 
 			if tc.expectedError != nil {
 
-				assert.Nil(t, result, "result")
-				assert.Error(t, err, "error")
+				assert.Nil(t, result)
+				assert.Error(t, err)
 
 			} else {
 
-				assert.NotNil(t, result, "result")
-				assert.NoError(t, err, "error")
+				assert.NotNil(t, result)
+				assert.NoError(t, err)
 
 				if result != nil {
 					assert.Equal(t, tc.expectedCountryCode, result.CountryCode, "country-code")
@@ -74,8 +77,8 @@ func TestCheckVATInvalidURL(t *testing.T) {
 
 	result, err := finance.CheckVAT("BE0836157420")
 
-	assert.Nil(t, result, "result")
-	assert.Error(t, err, "error")
+	assert.Nil(t, result)
+	assert.Error(t, err)
 
 }
 
@@ -99,8 +102,8 @@ func TestCheckVATTimeout(t *testing.T) {
 
 	result, err := finance.CheckVAT("BE0836157420")
 
-	assert.Nil(t, result, "result")
-	assert.Error(t, err, "error")
+	assert.Nil(t, result)
+	assert.Error(t, err)
 
 }
 
@@ -120,8 +123,8 @@ func TestCheckVATReadBodyError(t *testing.T) {
 
 	result, err := finance.CheckVAT("BE0836157420")
 
-	assert.Nil(t, result, "result")
-	assert.Error(t, err, "error")
+	assert.Nil(t, result)
+	assert.Error(t, err)
 
 }
 
@@ -141,8 +144,8 @@ func TestCheckVATInvalidInput(t *testing.T) {
 
 	result, err := finance.CheckVAT("BE0836157420")
 
-	assert.Nil(t, result, "result")
-	assert.Error(t, err, "error")
+	assert.Nil(t, result)
+	assert.Error(t, err)
 	assert.Equal(t, finance.ErrVATnumberNotValid, err)
 
 }
@@ -163,8 +166,8 @@ func TestCheckVATInvalidXML(t *testing.T) {
 
 	result, err := finance.CheckVAT("BE0836157420")
 
-	assert.Nil(t, result, "result")
-	assert.Error(t, err, "error")
+	assert.Nil(t, result)
+	assert.Error(t, err)
 
 }
 
@@ -184,8 +187,8 @@ func TestCheckVATSoapFault(t *testing.T) {
 
 	result, err := finance.CheckVAT("BE0836157420")
 
-	assert.Nil(t, result, "result")
-	assert.Error(t, err, "error")
+	assert.Nil(t, result)
+	assert.Error(t, err)
 	assert.Equal(t, finance.ErrVATserviceError+"error", err.Error(), "error-message")
 
 }
