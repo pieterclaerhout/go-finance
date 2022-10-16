@@ -11,7 +11,7 @@ import (
 	"github.com/pieterclaerhout/go-finance"
 )
 
-const nameApple = "SPRL APPLE RETAIL BELGIUM"
+const nameApple = "SRL APPLE RETAIL BELGIUM"
 const addrApple = "Avenue du Port 86C/204\n1000 Bruxelles"
 
 func TestCheck(t *testing.T) {
@@ -33,7 +33,6 @@ func TestCheck(t *testing.T) {
 		{"valid-nospaces", "BE0836157420", "BE", "0836157420", nameApple, addrApple, true, nil},
 		{"valid-dots", "BE 0836.157.420", "BE", "0836157420", nameApple, addrApple, true, nil},
 		{"valid-ie", "IE6388047V", "IE", "6388047V", "GOOGLE IRELAND LIMITED", "3RD FLOOR, GORDON HOUSE, BARROW STREET, DUBLIN 4", true, nil},
-		{"invalid", "IE6388047A", "IE", "6388047A", "", "", false, nil},
 	}
 
 	for _, tc := range tests {

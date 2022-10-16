@@ -72,7 +72,7 @@ func CheckVAT(vatNumber string) (*VATInfo, error) {
 		return nil, err
 	}
 
-	if bytes.Contains(xmlRes, []byte("INVALID_INPUT")) {
+	if bytes.Contains(xmlRes, []byte("INVALIDINPUT")) {
 		return nil, ErrVATnumberNotValid
 	}
 
