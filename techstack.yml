@@ -1,7 +1,8 @@
 repo_name: pieterclaerhout/go-finance
 report_id: a2ad4e60a40acee4dceebf24ff257ad6
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-09T11:16:31+00:00'
+timestamp: '2024-01-04T14:52:53+00:00'
 requested_by: pieterclaerhout
 provider: github
 branch: master
@@ -17,6 +18,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1005/O6AczwfV_400x400.png
+  detection_source_url: https://github.com/pieterclaerhout/go-finance
   detection_source: Repo Metadata
 - name: Git
   description: Fast, scalable, distributed revision control system
@@ -26,6 +28,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/pieterclaerhout/go-finance
   detection_source: Repo Metadata
 - name: Testify
   description: A toolkit with common assertions and mocks that plays nicely with the
@@ -37,6 +40,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Go Testing
   image_url: https://img.stackshare.io/service/8695/stretchr.png
+  detection_source_url: https://github.com/pieterclaerhout/go-finance/blob/master/go.mod
   detection_source: go.mod
   last_updated_by: dependabot[bot]
   last_updated_on: 2023-06-05 08:00:24.000000000 Z
